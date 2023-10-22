@@ -1,8 +1,5 @@
 package com.prueba.examen.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.prueba.examen.entities.Examen;
-import com.prueba.examen.entities.Opcion;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

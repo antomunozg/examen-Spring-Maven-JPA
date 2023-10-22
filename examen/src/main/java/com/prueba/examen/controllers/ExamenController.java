@@ -2,7 +2,7 @@ package com.prueba.examen.controllers;
 
 
 import com.prueba.examen.dto.ExamenDTO;
-import com.prueba.examen.entities.Examen;
+import com.prueba.examen.entities.ExamenEntity;
 import com.prueba.examen.services.ExamenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,14 @@ public class ExamenController {
     @Autowired
     private ExamenService examenService;
 
+    @Autowired
+    public ExamenController(ExamenService examenService) {
+        this.examenService = examenService;
+    }
+
     @PostMapping("/crear")
-    public ResponseEntity<Examen> crearExamen(@RequestBody ExamenDTO examen) {
-        Examen nuevoExamen = examenService.crearExamen(examen);
+    public ResponseEntity<ExamenEntity> crearExamen(@RequestBody ExamenDTO examen) {
+        ExamenEntity nuevoExamen = examenService.crearExamen(examen);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoExamen);
     }
 

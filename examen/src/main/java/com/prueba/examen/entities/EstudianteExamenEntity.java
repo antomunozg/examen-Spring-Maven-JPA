@@ -18,11 +18,11 @@ public class EstudianteExamenEntity{
 
     @ManyToOne
     @JoinColumn(name="idEstudiante")
-    private Estudiante estudiante;
+    private EstudianteEntity estudiante;
 
     @ManyToOne
     @JoinColumn(name="idExamen")
-    private Examen examen;
+    private ExamenEntity examen;
 
 
     private LocalDateTime fechaPresentacion;

@@ -2,7 +2,7 @@ package com.prueba.examen.controllers;
 
 import com.prueba.examen.dto.EstudianteDTO;
 import com.prueba.examen.dto.RespuestaHttpDTO;
-import com.prueba.examen.entities.Estudiante;
+import com.prueba.examen.entities.EstudianteEntity;
 import com.prueba.examen.services.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class EstudianteController {
 
 
     @PostMapping("/")
-    public ResponseEntity<Estudiante> crearEstudiante(@RequestBody EstudianteDTO estudiante) {
-        Estudiante nuevoEstudiante = estudianteService.crearEstudiante(estudiante);
+    public ResponseEntity<EstudianteEntity> crearEstudiante(@RequestBody EstudianteDTO estudiante) {
+        EstudianteEntity nuevoEstudiante = estudianteService.crearEstudiante(estudiante);
         return new ResponseEntity<>(nuevoEstudiante, HttpStatus.CREATED);
     }
 

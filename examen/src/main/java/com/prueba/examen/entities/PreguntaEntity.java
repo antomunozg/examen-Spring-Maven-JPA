@@ -1,7 +1,6 @@
 package com.prueba.examen.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.prueba.examen.dto.ExamenDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-public class Pregunta {
+@Table(name = "pregunta")
+public class PreguntaEntity {
 
 
     @Id
@@ -23,14 +23,14 @@ public class Pregunta {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "examen_id")
-    private Examen examen;
+    private ExamenEntity examen;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pregunta")
-    private List<Opcion> opciones;
+    private List<OpcionEntity> opciones;
 
 
-    public Pregunta(Long id, String enunciado, int puntaje, Examen examen, List<Opcion> opciones) {
+    public PreguntaEntity(Long id, String enunciado, int puntaje, ExamenEntity examen, List<OpcionEntity> opciones) {
         this.id = id;
         this.enunciado = enunciado;
         this.puntaje = puntaje;

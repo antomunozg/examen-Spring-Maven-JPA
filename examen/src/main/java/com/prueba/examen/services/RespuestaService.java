@@ -1,14 +1,13 @@
 package com.prueba.examen.services;
 
 import com.prueba.examen.dto.*;
-import com.prueba.examen.entities.Respuesta;
+import com.prueba.examen.entities.RespuestaEntity;
 import com.prueba.examen.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class RespuestaService {
@@ -28,7 +27,7 @@ public class RespuestaService {
     @Autowired
     private OpcionRepository opcionRepository;
 
-    public List<Respuesta> registrarRespuestaEstudiante(List<Respuesta> respuesta) {
+    public List<RespuestaEntity> registrarRespuestaEstudiante(List<RespuestaEntity> respuesta) {
         // Aquí puedes agregar validaciones o lógica adicional antes de guardar la respuesta
         return respuesta.stream().map(r -> respuestaRepository.save(r)).toList();
     }

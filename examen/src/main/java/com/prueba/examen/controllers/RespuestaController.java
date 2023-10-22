@@ -2,7 +2,7 @@ package com.prueba.examen.controllers;
 
 
 import com.prueba.examen.dto.RespuestaDTO;
-import com.prueba.examen.entities.Respuesta;
+import com.prueba.examen.entities.RespuestaEntity;
 import com.prueba.examen.services.RespuestaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class RespuestaController {
 
 
     @PostMapping("/registrar")
-    public ResponseEntity<List<Respuesta>> registrarRespuestaEstudiante(@RequestBody List<Respuesta> respuesta) {
+    public ResponseEntity<List<RespuestaEntity>> registrarRespuestaEstudiante(@RequestBody List<RespuestaEntity> respuesta) {
         return ResponseEntity.status(HttpStatus.CREATED).body(respuestaService.registrarRespuestaEstudiante(respuesta));
     }
 

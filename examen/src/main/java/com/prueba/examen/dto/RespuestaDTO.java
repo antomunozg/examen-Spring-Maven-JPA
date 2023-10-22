@@ -1,9 +1,5 @@
 package com.prueba.examen.dto;
 
-import com.prueba.examen.entities.Estudiante;
-import com.prueba.examen.entities.Examen;
-import com.prueba.examen.entities.Opcion;
-import com.prueba.examen.entities.Pregunta;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

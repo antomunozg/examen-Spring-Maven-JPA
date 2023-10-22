@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Opcion {
+@Table(name = "opcion")
+public class OpcionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +21,9 @@ public class Opcion {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pregunta_id")
-    private Pregunta pregunta;
+    private PreguntaEntity pregunta;
 
-    public Opcion(Long id, String texto, boolean esCorrecta, Pregunta pregunta) {
+    public OpcionEntity(Long id, String texto, boolean esCorrecta, PreguntaEntity pregunta) {
         this.id = id;
         this.texto = texto;
         this.esCorrecta = esCorrecta;

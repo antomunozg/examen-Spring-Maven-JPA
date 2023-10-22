@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Respuesta {
+@Table(name = "respuesta")
+public class RespuestaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,21 +16,21 @@ public class Respuesta {
 
     @ManyToOne
     @JoinColumn(name = "pregunta_id")
-    private Pregunta pregunta;
+    private PreguntaEntity pregunta;
 
     @ManyToOne
     @JoinColumn(name = "examen_id")
-    private Examen examen;
+    private ExamenEntity examen;
 
     @ManyToOne
     @JoinColumn(name = "estudiante_id")
-    private Estudiante estudiante;
+    private EstudianteEntity estudiante;
 
     @ManyToOne
     @JoinColumn(name = "opcion_id")
-    private Opcion opcionSeleccionada;
+    private OpcionEntity opcionSeleccionada;
 
-    public Respuesta(Pregunta pregunta, Examen examen, Estudiante estudiante, Opcion opcionSeleccionada) {
+    public RespuestaEntity(PreguntaEntity pregunta, ExamenEntity examen, EstudianteEntity estudiante, OpcionEntity opcionSeleccionada) {
         this.pregunta = pregunta;
         this.examen = examen;
         this.estudiante = estudiante;
