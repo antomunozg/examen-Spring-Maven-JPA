@@ -6,10 +6,11 @@ import com.prueba.examen.services.RespuestaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/respuestas")
@@ -19,9 +20,24 @@ public class RespuestaController {
     private RespuestaService respuestaService;
 
 
-    @PostMapping("/crear")
-    public ResponseEntity<Respuesta> crearRespuesta(@RequestBody Respuesta respuesta) {
-        Respuesta nuevaRespuesta = respuestaService.crearRespuesta(respuesta);
+    @PostMapping("/registrar")
+    public ResponseEntity<Respuesta> registrarRespuestaEstudiante(@RequestBody Respuesta respuesta) {
+        Respuesta nuevaRespuesta = respuestaService.registrarRespuestaEstudiante(respuesta);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaRespuesta);
+    }
+
+    @GetMapping("/recopilar/{estudianteId}/{examenId}")
+    public ResponseEntity<Map<String, Object>> recopilarRespuestasYCalcularPuntaje(
+            @PathVariable Long estudianteId,
+            @PathVariable Long examenId
+    ) {
+        List<Respuesta> respuestas = respuestaService.recopilarRespuestasDeEstudianteEnExamen(estudianteId, examenId);
+        int puntajeTotal = respuestaService.calcularPuntajeTotal(respuestas);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("respuestas", respuestas);
+        response.put("puntajeTotal", puntajeTotal);
+
+        return ResponseEntity.ok(response);
     }
 }

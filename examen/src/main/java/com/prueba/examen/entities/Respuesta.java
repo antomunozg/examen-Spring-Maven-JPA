@@ -1,6 +1,5 @@
 package com.prueba.examen.entities;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +8,7 @@ public class Respuesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "pregunta_id")
     private Pregunta pregunta;
@@ -21,14 +21,18 @@ public class Respuesta {
     @JoinColumn(name = "estudiante_id")
     private Estudiante estudiante;
 
+    @ManyToOne
+    @JoinColumn(name = "opcion_id")
+    private Opcion opcionSeleccionada;
+
     public Respuesta() {
     }
 
-    public Respuesta(Long id, Pregunta pregunta, Examen examen, Estudiante estudiante) {
-        this.id = id;
+    public Respuesta(Pregunta pregunta, Examen examen, Estudiante estudiante, Opcion opcionSeleccionada) {
         this.pregunta = pregunta;
         this.examen = examen;
         this.estudiante = estudiante;
+        this.opcionSeleccionada = opcionSeleccionada;
     }
 
     public Long getId() {
@@ -61,5 +65,13 @@ public class Respuesta {
 
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
+    }
+
+    public Opcion getOpcionSeleccionada() {
+        return opcionSeleccionada;
+    }
+
+    public void setOpcionSeleccionada(Opcion opcionSeleccionada) {
+        this.opcionSeleccionada = opcionSeleccionada;
     }
 }

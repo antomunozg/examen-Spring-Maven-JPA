@@ -14,4 +14,8 @@ public class OpcionService {
     public Opcion crearOpcion(Opcion opcion) {
         return opcionRepository.save(opcion);
     }
+
+    public Opcion actualizarOpcion(Opcion opcion) {
+        return opcionRepository.save(opcion);
+    }
 }

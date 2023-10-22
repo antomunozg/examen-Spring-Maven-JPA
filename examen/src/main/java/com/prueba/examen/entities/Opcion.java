@@ -1,6 +1,7 @@
 package com.prueba.examen.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class Opcion {
     private String texto;
     private boolean esCorrecta;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pregunta_id")
     private Pregunta pregunta;

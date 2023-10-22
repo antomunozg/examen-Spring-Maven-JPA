@@ -8,10 +8,7 @@ import com.prueba.examen.services.PreguntaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,13 +25,12 @@ public class PreguntaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPregunta);
     }
 
-    @PostMapping("/crearPreguntaConOpcionesYAsociarRespuestas")
-    public ResponseEntity<Pregunta> crearPreguntaConOpcionesYAsociarRespuestas(
-            @RequestBody Pregunta pregunta,
-            @RequestBody List<Opcion> opciones,
-            @RequestBody List<Respuesta> respuestas
+    @PostMapping("/registrar-en-examen/{examenId}")
+    public ResponseEntity<Pregunta> registrarPreguntaEnExamen(
+            @PathVariable Long examenId,
+            @RequestBody Pregunta pregunta
     ) {
-        Pregunta nuevaPregunta = preguntaService.crearPreguntaConOpcionesYAsociarRespuestas(pregunta, opciones, respuestas);
+        Pregunta nuevaPregunta = preguntaService.registrarPreguntaEnExamen(examenId, pregunta);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPregunta);
     }
 }

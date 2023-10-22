@@ -1,5 +1,6 @@
 package com.prueba.examen.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Estudiante {
     private String ciudad;
     private String zonaHoraria;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "estudiante_examen",

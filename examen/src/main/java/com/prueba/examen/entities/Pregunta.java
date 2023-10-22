@@ -1,5 +1,6 @@
 package com.prueba.examen.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,10 +15,12 @@ public class Pregunta {
     private String enunciado;
     private int puntaje;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "examen_id")
     private Examen examen;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pregunta")
     private List<Opcion> opciones;
 

@@ -1,5 +1,6 @@
 package com.prueba.examen.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -15,12 +16,15 @@ public class Examen {
     private LocalDate fechaPresentacion;
     private int puntajeTotal;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "examenesAsignados")
     private List<Estudiante> estudiantesAsignados;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "examen")
     private List<Pregunta> preguntas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "examen")
     private List<Respuesta> respuestas;
 

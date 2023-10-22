@@ -27,4 +27,16 @@ public class EstudianteController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{estudianteId}/asociar-examen/{examenId}")
+    public ResponseEntity<Estudiante> asociarEstudianteAExamen(
+            @PathVariable Long estudianteId, @PathVariable Long examenId
+    ) {
+        Estudiante estudiante = estudianteService.asociarEstudianteAExamen(estudianteId, examenId);
+        if (estudiante != null) {
+            return ResponseEntity.ok(estudiante);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

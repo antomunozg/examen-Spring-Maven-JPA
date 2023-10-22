@@ -48,6 +48,24 @@ public class EstudianteService {
         }
     }
 
+    public Estudiante asociarEstudianteAExamen(Long estudianteId, Long examenId) {
+        Estudiante estudiante = estudianteRepository.findById(estudianteId).orElse(null);
+        Examen examen = examenRepository.findById(examenId).orElse(null);
+
+        if (estudiante != null && examen != null) {
+            // Asociar el estudiante al examen
+            estudiante.getExamenesAsignados().add(examen);
+            examen.getEstudiantesAsignados().add(estudiante);
+            // Actualizar tanto el estudiante como el examen en la base de datos
+            estudianteRepository.save(estudiante);
+            examenRepository.save(examen);
+            return estudiante;
+        } else {
+            // Manejo de errores o mensajes de error en caso de que el estudiante o el examen no se encuentren
+            return null;
+        }
+    }
+
     public void agregarExamenAsignado(Estudiante estudiante, Examen examen, LocalDate fechaPresentacionEstudiante) {
 
         // Puedes establecer la fecha de presentación del examen aquí si es relevante para tu aplicación
