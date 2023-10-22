@@ -1,16 +1,24 @@
 package com.prueba.examen.services;
 
 
+import com.prueba.examen.dto.EstudianteDTO;
+import com.prueba.examen.dto.EstudianteExamenDTO;
+import com.prueba.examen.dto.ExamenDTO;
+import com.prueba.examen.dto.RespuestaHttpDTO;
 import com.prueba.examen.entities.Estudiante;
+import com.prueba.examen.entities.EstudianteExamenEntity;
 import com.prueba.examen.entities.Examen;
+import com.prueba.examen.repositories.EstudianteExamenRepository;
 import com.prueba.examen.repositories.EstudianteRepository;
 import com.prueba.examen.repositories.ExamenRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class EstudianteService {
@@ -21,47 +29,37 @@ public class EstudianteService {
     @Autowired
     private ExamenRepository examenRepository;
 
+    @Autowired
+    private EstudianteExamenRepository estudianteExamenRepository;
 
-    public Estudiante crearEstudiante(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
+    @Autowired
+    private ModelMapper modelMapper;
+
+
+    public Estudiante crearEstudiante(EstudianteDTO estudiante) {
+        estudiante.setZonaHoraria(ZoneId.systemDefault().getId());
+        return estudianteRepository.save(modelMapper.map(estudiante, Estudiante.class));
     }
 
 
-    public void asignarExamenAEstudiante(Long estudianteId, Long examenId) {
-        Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElse(null);
-
-        Examen examen = examenRepository.findById(examenId)
-                .orElse(null);
+    public RespuestaHttpDTO asociarEstudianteAExamen(Long estudianteId, Long examenId) {
+        EstudianteDTO estudiante = estudianteRepository.idEstudiante(estudianteId);
+        ExamenDTO examen = examenRepository.examen(examenId);
 
         if (estudiante != null && examen != null) {
-            ZoneId zonaHorariaEstudiante = ZoneId.of(estudiante.getZonaHoraria());
+            EstudianteExamenDTO estudianteExamenDTO =  new EstudianteExamenDTO();
+            estudianteExamenDTO.setEstudiante(estudiante);
+            estudianteExamenDTO.setExamen(examen);
+            OffsetDateTime offsetDateTimeBogota = examen.getFechaPresentacion().atZone(ZoneId.of("America/Bogota")).toOffsetDateTime();
+            OffsetDateTime offsetDateTimeEstudiante = offsetDateTimeBogota.withOffsetSameInstant(ZoneId.of(estudiante.getZonaHoraria()).getRules().getOffset(offsetDateTimeBogota.toInstant()));
+            estudianteExamenDTO.setFechaPresentacion(offsetDateTimeEstudiante.toLocalDateTime());
 
-            ZonedDateTime fechaPresentacionBogota = examen.getFechaPresentacion()
-                    .atStartOfDay()  // Convierte la fecha a un objeto ZonedDateTime con la hora a las 00:00
-                    .atZone(ZoneId.of("America/Bogota"));
-
-            ZonedDateTime fechaPresentacionEstudiante = fechaPresentacionBogota.withZoneSameInstant(zonaHorariaEstudiante);
-
-            agregarExamenAsignado(estudiante, examen, fechaPresentacionEstudiante.toLocalDate());
-            estudianteRepository.save(estudiante);
-        }
-    }
-
-    public Estudiante asociarEstudianteAExamen(Long estudianteId, Long examenId) {
-        Estudiante estudiante = estudianteRepository.findById(estudianteId).orElse(null);
-        Examen examen = examenRepository.findById(examenId).orElse(null);
-
-        if (estudiante != null && examen != null) {
-            // Asociar el estudiante al examen
-            estudiante.getExamenesAsignados().add(examen);
-            examen.getEstudiantesAsignados().add(estudiante);
-            // Actualizar tanto el estudiante como el examen en la base de datos
-            estudianteRepository.save(estudiante);
-            examenRepository.save(examen);
-            return estudiante;
+            RespuestaHttpDTO respuesta = new RespuestaHttpDTO();
+            respuesta.setMensaje("Se realizo la asociacion correctamente");
+            respuesta.setStatus(HttpStatus.OK);
+            respuesta.setContenido(estudianteExamenRepository.save(modelMapper.map(estudianteExamenDTO, EstudianteExamenEntity.class)));
+            return respuesta;
         } else {
-            // Manejo de errores o mensajes de error en caso de que el estudiante o el examen no se encuentren
             return null;
         }
     }
@@ -69,9 +67,9 @@ public class EstudianteService {
     public void agregarExamenAsignado(Estudiante estudiante, Examen examen, LocalDate fechaPresentacionEstudiante) {
 
         // Puedes establecer la fecha de presentación del examen aquí si es relevante para tu aplicación
-        examen.setFechaPresentacion(fechaPresentacionEstudiante);
+      //  examen.setFechaPresentacion(fechaPresentacionEstudiante);
         // Agregar el examen a la lista de exámenes asignados al estudiante
-        estudiante.getExamenesAsignados().add(examen);
+       // estudiante.getExamenesAsignados().add(examen);
 
         // Realizar alguna lógica adicional si es necesario
 

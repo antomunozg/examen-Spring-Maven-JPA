@@ -1,6 +1,7 @@
 package com.prueba.examen.controllers;
 
 
+import com.prueba.examen.dto.RespuestaDTO;
 import com.prueba.examen.entities.Respuesta;
 import com.prueba.examen.services.RespuestaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,8 @@ public class RespuestaController {
 
 
     @PostMapping("/registrar")
-    public ResponseEntity<Respuesta> registrarRespuestaEstudiante(@RequestBody Respuesta respuesta) {
-        Respuesta nuevaRespuesta = respuestaService.registrarRespuestaEstudiante(respuesta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaRespuesta);
+    public ResponseEntity<List<Respuesta>> registrarRespuestaEstudiante(@RequestBody List<Respuesta> respuesta) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuestaService.registrarRespuestaEstudiante(respuesta));
     }
 
     @GetMapping("/recopilar/{estudianteId}/{examenId}")
@@ -31,7 +31,7 @@ public class RespuestaController {
             @PathVariable Long estudianteId,
             @PathVariable Long examenId
     ) {
-        List<Respuesta> respuestas = respuestaService.recopilarRespuestasDeEstudianteEnExamen(estudianteId, examenId);
+        RespuestaDTO respuestas = respuestaService.recopilarRespuestasDeEstudianteEnExamen(estudianteId, examenId);
         int puntajeTotal = respuestaService.calcularPuntajeTotal(respuestas);
 
         Map<String, Object> response = new HashMap<>();

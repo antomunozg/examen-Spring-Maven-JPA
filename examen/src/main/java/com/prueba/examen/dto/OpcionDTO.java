@@ -1,28 +1,28 @@
-package com.prueba.examen.entities;
+package com.prueba.examen.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.prueba.examen.entities.Pregunta;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-@Entity
-public class Opcion {
+public class OpcionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String texto;
     private boolean esCorrecta;
+    private PreguntaDTO pregunta;
+    public OpcionDTO(String texto, boolean esCorrecta) {
+        this.texto = texto;
+        this.esCorrecta = esCorrecta;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "pregunta_id")
-    private Pregunta pregunta;
+    }
 
-    public Opcion(Long id, String texto, boolean esCorrecta, Pregunta pregunta) {
+
+    public OpcionDTO(Long id, String texto, boolean esCorrecta, PreguntaDTO pregunta) {
         this.id = id;
         this.texto = texto;
         this.esCorrecta = esCorrecta;

@@ -20,11 +20,7 @@ public class OpcionController {
     @Autowired
     private PreguntaService preguntaService;
 
-    @PostMapping("/crear")
-    public ResponseEntity<Opcion> crearOpcion(@RequestBody Opcion opcion) {
-        Opcion nuevaOpcion = opcionService.crearOpcion(opcion);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaOpcion);
-    }
+
 
     @PostMapping("/crear-y-asociar-a-pregunta/{preguntaId}")
     public ResponseEntity<Opcion> crearOpcionYAsociarAPregunta(@PathVariable Long preguntaId, @RequestBody Opcion opcion) {
@@ -38,5 +34,7 @@ public class OpcionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaOpcion);
     }
 
+    //ACTUALIZAR
+    //ELIMINAR
 
 }

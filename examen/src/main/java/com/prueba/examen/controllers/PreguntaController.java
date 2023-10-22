@@ -19,11 +19,7 @@ public class PreguntaController {
     @Autowired
     private PreguntaService preguntaService;
 
-    @PostMapping("/crear")
-    public ResponseEntity<Pregunta> crearPregunta(@RequestBody Pregunta pregunta) {
-        Pregunta nuevaPregunta = preguntaService.crearPregunta(pregunta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPregunta);
-    }
+
 
     @PostMapping("/registrar-en-examen/{examenId}")
     public ResponseEntity<Pregunta> registrarPreguntaEnExamen(
@@ -33,4 +29,7 @@ public class PreguntaController {
         Pregunta nuevaPregunta = preguntaService.registrarPreguntaEnExamen(examenId, pregunta);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPregunta);
     }
+
+    //ACTUALIZAR
+    //ELIMINAR
 }
