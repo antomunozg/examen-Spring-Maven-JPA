@@ -32,7 +32,7 @@ public class PreguntaControllerTest {
     }
 
     @Test
-    public void testRegistrarPreguntaEnExamen() {
+    public void testRegistrarPreguntaEnExamen() throws Exception {
         // Datos de ejemplo
         Long examenId = 1L;
         PreguntaEntity nuevaPregunta = new PreguntaEntity();

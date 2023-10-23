@@ -25,14 +25,14 @@ public class PreguntaService {
         return preguntaRepository.findById(preguntaId).orElse(null);
     }
 
-    public PreguntaEntity registrarPreguntaEnExamen(Long examenId, PreguntaEntity pregunta) {
+    public PreguntaEntity registrarPreguntaEnExamen(Long examenId, PreguntaEntity pregunta) throws Exception {
         ExamenEntity examen = examenRepository.findById(examenId).orElse(null);
         if (examen != null) {
             pregunta.setExamen(examen);
             return preguntaRepository.save(pregunta);
         } else {
             // Lógica de manejo de errores si el examen no se encuentra
-            return null;
+            throw new Exception("El examen no fue encontrado");
         }
     }
 }

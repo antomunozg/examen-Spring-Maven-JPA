@@ -34,7 +34,4 @@ public class OpcionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaOpcion);
     }
 
-    //ACTUALIZAR
-    //ELIMINAR
-
 }

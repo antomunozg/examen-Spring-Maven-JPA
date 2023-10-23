@@ -28,7 +28,6 @@ public class RespuestaService {
     private OpcionRepository opcionRepository;
 
     public List<RespuestaEntity> registrarRespuestaEstudiante(List<RespuestaEntity> respuesta) {
-        // Aquí puedes agregar validaciones o lógica adicional antes de guardar la respuesta
         return respuesta.stream().map(r -> respuestaRepository.save(r)).toList();
     }
 
@@ -55,7 +54,7 @@ public class RespuestaService {
     public int calcularPuntajeTotal(RespuestaDTO respuestas) {
         int puntajeTotal = 0;
 
-            // Verifica si la opción seleccionada es correcta
+        // Verifica si la opción seleccionada es correcta
         for(OpcionDTO opcion : respuestas.getOpcionesSeleccionada()){
             if (opcion != null && opcion.isEsCorrecta()) {
                 puntajeTotal = respuestas.getPreguntas().stream().mapToInt(PreguntaDTO::getPuntaje).sum();

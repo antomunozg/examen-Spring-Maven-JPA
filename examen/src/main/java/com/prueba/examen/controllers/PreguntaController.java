@@ -21,11 +21,8 @@ public class PreguntaController {
     public ResponseEntity<PreguntaEntity> registrarPreguntaEnExamen(
             @PathVariable Long examenId,
             @RequestBody PreguntaEntity pregunta
-    ) {
+    ) throws Exception {
         PreguntaEntity nuevaPregunta = preguntaService.registrarPreguntaEnExamen(examenId, pregunta);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPregunta);
     }
-
-    //ACTUALIZAR
-    //ELIMINAR
 }
